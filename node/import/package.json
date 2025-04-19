@@ -1,0 +1,21 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/prathamesh-korde/Backend#readme",
+  "bugs": {
+    "url": "https://github.com/prathamesh-korde/Backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prathamesh-korde/Backend.git"
+  },
+  "license": "ISC",
+  "author": "prathamesh korde",
+  "type": "commonjs",
+  "main": "math.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
