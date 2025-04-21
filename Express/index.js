@@ -28,7 +28,7 @@ app.use((req,res)=>{
 
 
 app.get("/",(req,res)=>{
-    res.send("you can contacted root path");
+    res.send("hellow i am root");
 });
 
 app.get("/orange",(req,res)=>{
