@@ -28,7 +28,13 @@ app.use((req,res)=>{
 
 
 app.get("/",(req,res)=>{
-    res.send("hellow i am root");
+    res.send(`welcome to the root page.`);
+});
+
+app.get("/:username/:id",(req,res)=>{
+    let{username , id} = req.params;
+    let htmlString = `<h1>welcome to the page of ${username}</h1>`
+    res.send(htmlString);
 });
 
 app.get("/orange",(req,res)=>{
