@@ -49,4 +49,12 @@ app.get("/banana",(req,res)=>{
     res.send("you can contacted banana path");
 });
 
+app.get("/search",(req,res)=>{
+    let {q} =  req.query;
+    if(!q){
+        res.send("<h1>nothing search</h1>");
+    }
+    res.send(`search result for query ${q}`);
+})
+
 
