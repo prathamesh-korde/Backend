@@ -54,7 +54,7 @@ app.get("/search",(req,res)=>{
     if(!q){
         res.send("<h1>nothing search</h1>");
     }
-    res.send(`search result for query ${q}`);
+    res.send(`<h1>search result for query ${q} </h1>`);
 })
 
 
