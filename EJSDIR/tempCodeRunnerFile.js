@@ -1,1 +1,1 @@
-diceVal
+randomNum

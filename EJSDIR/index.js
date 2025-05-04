@@ -4,6 +4,9 @@ const app = express();
 //const path = require("path");
 
 const port= 3000;
+
+app.use(express.static(path.join(__dirname,"/public/css")));
+app.use(express.static(path.join(__dirname,"/public/js")));
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"/views"));
 

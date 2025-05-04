@@ -1,17 +1,6 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instragam</title>
-    <style>
-        img{
-            height: 100px;
-            width: 100px;
-        }
-    </style>
-</head>
+<%- include("includes/head.ejs") %>
+
 <body>
     <h2>this page belong to-<br> @<%= data.name %> </h2>
     <button>Follow</button>
@@ -29,5 +18,8 @@
          </p>
 
         <% } %>
+        
+<%- include("includes/footer.ejs") %>
+        <script src="/app.js"></script>
 </body>
 </html>
