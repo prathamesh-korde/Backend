@@ -13,8 +13,8 @@ for(let i=2;i<arr.length;i++){
 }
 
 */
-const info = require("./fruit");
-console.log("info");
+const info = require("./fruits");
+console.log(info);
 
 
 
