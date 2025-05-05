@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GET and POST request</title>
+</head>
+<body>
+    <h1>Get Request form</h1>
+    <form method="get" action="http://localhost:3000/register">
+        <!-- we define Http with link(path) due to by defalt it uses file protocal so we have to define http-->
+        <input placeholder="enter name" name="user" type="text">
+        <input placeholder="enter Password" name="password" type="text">
+        <button> Submit</button>
+    </form>
+    <hr>
+    
+    <h1>Post Request form</h1>
+    <form method="post" action="http://localhost:3000/register">
+        <input placeholder="enter name" name="user" type="text">
+        <input placeholder="enter Password" name="password" type="text">
+        <button> Submit</button>
+    </form>
+    <script src="app.js"></script>
+</body>
+</html>
