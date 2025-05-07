@@ -1,10 +1,136 @@
-h1{
-    color: maroon;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
 }
 
-.post{
-    background-color: antiquewhite;
+h1, h2 {
+    text-align: center;
+    color: #4A90E2;
+    margin-bottom: 30px;
 }
-.user{
+
+p {
+    text-align: center;
+    color: #777;
     font-style: italic;
+    margin-bottom: 10px;
+}
+
+.post {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.post:hover {
+    transform: translateY(-3px);
+}
+
+.user {
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+h4 {
+    font-size: 18px;
+    color: #333;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+a {
+    margin-right: 10px;
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    display: inline;
+}
+
+button {
+    background-color: #FF5C5C;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #e04343;
+}
+
+a[href$="/post/new"] {
+    display: block;
+    margin: 30px auto;
+    text-align: center;
+    font-size: 18px;
+    color: #28a745;
+    font-weight: bold;
+}
+
+.info {
+    text-align: center;
+    color: #666;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.textarea {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.input-text {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
 }

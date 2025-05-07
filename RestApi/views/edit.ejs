@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit Post</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h2>Edit Your Post </h2>
-    <p>post id : <%=post.id%></p>
-    <p> post Username: @<%= post.username%></p>
-    <form method="post" action="/post/<%=post.id%>?_method=PATCH ">
-        <textarea rows="10" cols="35" name="content">
-            <%=
-            post.content
-            %>
-        </textarea>
-        <button> Submit </button>
+    <h2>Edit Your Post</h2>
+    <p class="info">Post ID: <%= post.id %></p>
+    <p class="info">Username: @<%= post.username %></p>
+
+    <form method="post" action="/post/<%= post.id %>?_method=PATCH" class="form-container">
+        <textarea rows="10" cols="50" name="content" class="textarea"><%= post.content %></textarea>
+        <br>
+        <button type="submit">Submit</button>
     </form>
 </body>
 </html>
