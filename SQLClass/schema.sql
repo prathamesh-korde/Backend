@@ -1,0 +1,8 @@
+show TABLES;
+
+CREATE TABLE stu (
+    id VARCHAR(50) PRIMARY KEY,
+    userNmae VARCHAR(50) UNIQUE,
+    email VARCHAR(50) UNIQUE not NULL,
+    PASSWORD VARCHAR(50) not NULL
+);
