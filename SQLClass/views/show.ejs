@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show User Data</title>
+    <style>
+        tr,th,td{
+            border: 2px solid black;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>User data - </h1>
+        <table>
+            <tr>
+           <th>ID</th>
+           <th>Username</th>
+           <th>Email</th>
+           </tr>
+           
+           <% users.forEach(user => { %>
+            <tr>
+                <td><%= user.id %></td>
+                <td><%= user.userNmae %></td>
+                <td><%= user.email %></td>
+                <td>
+                    <form method="get" action="/Home/user/<%= user.id %>/edit">
+                        <button> Edit </button>
+                    </form>
+                    <form method="get" action="/Home/user/<%= user.id %>">
+                        <button> Delete </button>
+                    </form>
+
+                </td>
+            </tr>
+        <% }); %>
+
+            </table>
+            <form method="get" action="/Home/user/add">
+                <button> Add New User </button>
+            </form>
+</body>
+</html>

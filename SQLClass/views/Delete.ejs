@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete the user</title>
+    
+</head>
+<body>
+    <h1>You are about to Delete this user: <%= users[0].id %> </h1>
+    <form method="post" action="/Home/user/<%= users[0].id %>?_method=DELETE">
+       
+        <label for="email">Email:</label><br>
+        <textarea name="email" id="email"> </textarea><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" name="password" id="password" placeholder="Enter Password"/><br><br>
+
+        <button type="submit">Delete</button>
+    </form>
+</body>
+</html>
