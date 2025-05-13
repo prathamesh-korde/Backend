@@ -1,0 +1,121 @@
+/* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 30px;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+/* Headings */
+h1, h3 {
+    text-align: center;
+    color: #075e54;
+    margin-bottom: 30px;
+}
+
+/* Chat container card */
+.chat {
+    background-color: #fff;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Message area styling */
+.msg {
+    margin: 10px 0;
+    padding: 12px;
+    background-color: #e1ffc7;
+    border-radius: 8px;
+}
+
+/* Inline forms (in chat cards) */
+.chat form {
+    display: inline;
+}
+
+/* Buttons */
+button {
+    background-color: #25d366;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 1em;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #1ebea5;
+}
+
+/* Delete button override */
+#delete {
+    background-color: #dc3545;
+}
+
+#delete:hover {
+    background-color: #c82333;
+}
+
+/* Forms (New + Edit Chat) */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Input fields and textarea */
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+/* Labels */
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Paragraph styling (for timestamp/info) */
+.chat p:last-child,
+form p {
+    font-size: 0.9em;
+    color: #777;
+}
+
+/* Highlighted sender/receiver info */
+b {
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    body {
+        margin: 15px;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
