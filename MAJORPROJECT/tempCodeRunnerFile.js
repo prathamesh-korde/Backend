@@ -1,1 +1,1 @@
-allListings
+listing
