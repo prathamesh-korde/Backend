@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NxtStay</title>
-</head>
+<% layout("/layouts/boilerpalte.ejs") %>
 <body>
 
     <h1> all Listings</h1>
+    <!--
     <form method="get" action="/Listings/new">
         <button> Create new Listing</button>
     </form>
+    -->
 
 <ul>
     <% for(let listing of allListings) {%>
@@ -18,5 +14,5 @@
         <% }%>
 </ul>
 </body>
-</html>
+
 
