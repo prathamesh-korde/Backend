@@ -7,13 +7,8 @@ const ListingSchema = new Schema({
     
   },
   description : String,
-  image: {
-    filename: String,
-    url: {
-      type: String,
-      default: "https://s4.arizona.edu/sites/default/files/styles/az_full_width_bg_large/public/2025-04/AdobeStock_302537769.jpeg.webp?itok=0pqgaB4V"
-    }
-  },
+  image: { filename: String, url: String }
+,
   price : Number,
   location : String,
   country : String,

@@ -1,12 +1,31 @@
 <% layout("/layouts/boilerpalte.ejs") %>
 <body>
 
+
     <h1> all Listings</h1>
     <!--
     <form method="get" action="/Listings/new">
         <button> Create new Listing</button>
     </form>
     -->
+
+    <div class="row row-cols-lg-3 row-cols-mid-3 row-cols-sm-1">
+    <% for(let listing of allListings) { %>
+    <div class="card col" style="width: 20rem;">
+  <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing image">
+
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">
+        <%= listing.title %>
+        <br><br>
+        &#8377; <%= listing.price %> / Night
+    </p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+ <% }%>
+ </div>
 
 <ul>
     <% for(let listing of allListings) {%>
