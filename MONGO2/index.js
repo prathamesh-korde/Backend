@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+const ExpressError = require("./ExpressError");
 const port = 8080;
 
 const mongoose = require("mongoose");
@@ -10,6 +10,7 @@ app.use(methodOverride('_method'));
 
 const Chat = require("./models/chats.js");
 const { name } = require("ejs");
+const { nextTick } = require("process");
 
 app.use(express.urlencoded({extended:true}));
 
@@ -48,29 +49,42 @@ chat1.save().then((res)=>{
 //index.route
 app.get("/chat",async (req,res)=>{
     let chats = await Chat.find();
-    res.render("index.ejs",{chats});
+    res.render("index.ejs",{chats});   
 })
 
 //new chat 
 app.get("/chat/new",(req,res)=>{
+    throw new ExpressError(404,"page not found");
     res.render("new.ejs");
+    
 })
 
-app.post("/chat",(req,res) =>{
-    const {from , msg , to} = req.body;
-    let newChat = new Chat({
-        from:from,
-        msg:msg,
-        to:to,
-        created_at:new Date(),
-    })
-    newChat.save().then((res)=>{
-        console.log("data added sucessfully");
-    }).catch(err=>{
-        console.log(err);
-    })
+app.post("/chat", async (req, res, next) => {
+    try {
+        const { from, msg, to } = req.body;
+        let newChat = new Chat({
+            from,
+            msg,
+            to,
+            created_at: new Date(),
+        });
+        await newChat.save(); 
+        console.log("Data added successfully");
+        res.redirect("/chat");
+    } catch (err) {
+        next(err);
+    }
+});
 
-    res.redirect("/chat");
+
+//New- Show route
+app.get("/chats/:id",async(req,res,next)=>{
+    let{id} = req.params;
+    let chat = await Chat.findById(id);
+    if(!chat){
+        next(new ExpressError(404,"chat not found"));
+    }
+    res.render("edit.ejs",{chat});
 })
 
 //Edit route 
@@ -110,6 +124,13 @@ app.delete("/chat/:id",async (req,res)=>{
 app.get("/",(req,res)=>{
     res.send("root is working");
 })
+
+// error-handling middleware
+app.use((err, req, res, next) => {
+    let { status = 500, message = "Some error occurred" } = err;
+    res.status(status).send(message);
+});
+
 
 app.listen(port,(req,res)=>{
     console.log("server is working");

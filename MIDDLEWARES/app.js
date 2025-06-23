@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+const ExpressError = require("./ExpressError");
 const port = 3000;
 //middleware --> responce send
 
@@ -47,19 +47,37 @@ const checkToken = (req,res,next)=>{
     if(token === "giveaccess"){
         next();
     }
-    throw new Error("Access Denied !");
+    throw new ExpressError( 401 ,"Access Denied !");
 };
 
-app.get("/app",checkToken,(req,res)=>{
-    res.send("data");
-    next();
-})
+// app.get("/app",checkToken,(req,res)=>{
+//     res.send("data");
+//     next();
+// })
 //express come with build in error handler that handle any error that 
 // comes in app it's an middleware function which add at the end of middleware function stack
-app.get("/wrong",(req,res)=>{
+
+app.get("/err",(req,res)=>{
     abcd = abcd;
 })
 
+app.get("/admin",(req,res)=>{
+    throw new ExpressError(403,"Access to admin is forbidden")
+})
+
+app.use((err,req,res,next)=>{
+   // console.log("-----Error-----");
+   let {status = 500, message = "some error occurs"} = err;
+    res.status(status).send(message);
+})
+
+// app.use((err,req,res,next)=>{
+//     console.log("-------Error2-------");
+//     next(err);
+// })
+
+
+/*
 app.get("/",(req,res)=>{
     res.send("Hi i am root.");
 })
@@ -67,10 +85,11 @@ app.get("/",(req,res)=>{
 app.get("/random",(req,res) =>{
     res.send("this is random page");
 })
+    */
 
-app.use((req,res)=>{
-    res.status(404).send("page not found Error:404");
-})
+// app.use((req,res)=>{
+//     res.status(404).send("page not found Error:404");
+// })
 
 app.listen(port,(req,res)=>{
     console.log(`server is listning on port ${port}`);
