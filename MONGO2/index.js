@@ -48,13 +48,18 @@ chat1.save().then((res)=>{
 
 //index.route
 app.get("/chat",async (req,res)=>{
-    let chats = await Chat.find();
-    res.render("index.ejs",{chats});   
+      try{
+        let chats = await Chat.find();
+    res.render("index.ejs",{chats}); 
+      }
+      catch(err){
+        next(err);
+      }
 })
 
 //new chat 
 app.get("/chat/new",(req,res)=>{
-    throw new ExpressError(404,"page not found");
+   // throw new ExpressError(404,"page not found");
     res.render("new.ejs");
     
 })
@@ -76,27 +81,41 @@ app.post("/chat", async (req, res, next) => {
     }
 });
 
+//asyncWrap function
+function asyncWrap(fn){
+    return function(req,res,next){
+        fn(req,res,next).catch((req,res,next) => next(err));
+    }
+}
+
 
 //New- Show route
-app.get("/chats/:id",async(req,res,next)=>{
-    let{id} = req.params;
+app.get("/chats/:id",asyncWrap(async(req,res,next)=>{
+    
+        let{id} = req.params;
     let chat = await Chat.findById(id);
     if(!chat){
         next(new ExpressError(404,"chat not found"));
     }
     res.render("edit.ejs",{chat});
-})
+}));
 
 //Edit route 
 app.get("/chat/:id/edit",async (req,res)=>{
-    let {id} = req.params;
+    try{
+        let {id} = req.params;
    let chat = await Chat.findById(id);
     res.render("edit.ejs",{chat});
+    }
+    catch(err){
+        next(err);
+    }
 })
 
 //update route
 app.put("/chat/:id", async (req, res) => {
-    const { id } = req.params; // Destructure the actual id
+    try{
+        const { id } = req.params; // Destructure the actual id
     const { msg } = req.body;
 
     try {
@@ -111,14 +130,23 @@ app.put("/chat/:id", async (req, res) => {
         console.error("Error updating chat:", err);
         res.status(500).send("Internal Server Error");
     }
+    }
+    catch(err){
+        next(err);
+    }
 });
 
 
 //destroy route
 app.delete("/chat/:id",async (req,res)=>{
-    const { id } = req.params;
+    try{
+        const { id } = req.params;
      const deleatedChat= await Chat.findByIdAndDelete(id);
      res.redirect("/chat");
+    }
+    catch(err){
+        next(err);
+    }
 })
 
 app.get("/",(req,res)=>{
