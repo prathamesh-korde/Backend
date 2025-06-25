@@ -6,7 +6,8 @@ const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-
+const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js");
 
 main()
   .then(() => {
@@ -40,47 +41,48 @@ app.get("/Listings/new",(req,res)=>{
 })
 
 //show route
-app.get("/Listings/:id",async (req,res)=>{
+app.get("/Listings/:id",wrapAsync(async (req,res)=>{
   let {id} = req.params;
   const listing = await Listing.findById(id);
   res.render("listings/show.ejs",{listing})
-})
-
+}));
 
 //index route
-app.get("/Listings",async (req,res)=>{
+app.get("/Listings",wrapAsync(async (req,res)=>{
    const allListings = await Listing.find({})
   res.render("Listings/index.ejs", { allListings });
-})
+}));
 
 //create
-app.post("/Listings", async (req, res) => {
- //let{title , description , image , price , location , country} = req.body;
- let newListing = new Listing(req.body.Listing);
- newListing.save();
+app.post("/Listings", wrapAsync (async (req, res, next) => {
+ 
+  //let{title , description , image , price , location , country} = req.body;
+ const newListing = new Listing(req.body.Listing);
+  await newListing.save();
  res.redirect("/Listings");
-})
+ 
+}))
 
 //edit route
-app.get("/Listings/:id/edit", async (req,res)=>{
+app.get("/Listings/:id/edit", wrapAsync(async (req,res)=>{
   let {id} = req.params;
   const listing = await Listing.findById(id);
   res.render("Listings/edit.ejs",{listing});
-})
+}));
 
 //Update route
-app.put("/Listings/:id", async (req, res) => {
+app.put("/Listings/:id",wrapAsync( async (req, res) => {
   const { id } = req.params;
   await Listing.findByIdAndUpdate(id, { ...req.body.Listing }, { runValidators: true });
   res.redirect(`/Listings/${id}`);
-});
+}));
 
 //delete rpute
-app.delete("/Listings/:id",async(req,res)=>{
+app.delete("/Listings/:id",wrapAsync(async(req,res)=>{
   const { id } = req.params;
   let deleatedListing = await Listing.findByIdAndDelete(id);
   res.redirect(`/Listings`);
-})
+}));
 
 /*
 app.get("/testListing", async (req, res) => {
@@ -102,6 +104,13 @@ app.get("/testListing", async (req, res) => {
   }
 });
 */
+
+
+app.use((err,req,res,next) =>{
+  let{statusCode , message} = err;
+  res.status(statusCode).send(message);
+  
+})
 
 app.listen(8080, () => {
   console.log("Server listening on port 8080");

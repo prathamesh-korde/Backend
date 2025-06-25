@@ -7,7 +7,12 @@ const ListingSchema = new Schema({
     
   },
   description : String,
-  image: { filename: String, url: String }
+  image: { filename: String, 
+    url: {
+      type: String,
+      default: "https://cdn.create.vista.com/api/media/medium/8691703/stock-photo-suburban-home-with-front-porch?token=" // <-- Default image URL
+    },
+   }
 ,
   price : Number,
   location : String,
