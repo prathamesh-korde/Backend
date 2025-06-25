@@ -84,7 +84,7 @@ app.post("/chat", async (req, res, next) => {
 //asyncWrap function
 function asyncWrap(fn){
     return function(req,res,next){
-        fn(req,res,next).catch((req,res,next) => next(err));
+        fn(req,res,next).catch(err=> next(err));
     }
 }
 
@@ -101,20 +101,17 @@ app.get("/chats/:id",asyncWrap(async(req,res,next)=>{
 }));
 
 //Edit route 
-app.get("/chat/:id/edit",async (req,res)=>{
-    try{
+app.get("/chat/:id/edit",asyncWrap(async (req,res)=>{
+   
         let {id} = req.params;
    let chat = await Chat.findById(id);
     res.render("edit.ejs",{chat});
-    }
-    catch(err){
-        next(err);
-    }
-})
+    
+}));
 
 //update route
-app.put("/chat/:id", async (req, res) => {
-    try{
+app.put("/chat/:id", asyncWrap(async (req, res) => {
+   
         const { id } = req.params; // Destructure the actual id
     const { msg } = req.body;
 
@@ -130,27 +127,34 @@ app.put("/chat/:id", async (req, res) => {
         console.error("Error updating chat:", err);
         res.status(500).send("Internal Server Error");
     }
-    }
-    catch(err){
-        next(err);
-    }
-});
+}));
 
 
 //destroy route
-app.delete("/chat/:id",async (req,res)=>{
-    try{
+app.delete("/chat/:id",asyncWrap(async (req,res)=>{
+    
         const { id } = req.params;
      const deleatedChat= await Chat.findByIdAndDelete(id);
      res.redirect("/chat");
-    }
-    catch(err){
-        next(err);
-    }
-})
+   
+}));
 
 app.get("/",(req,res)=>{
     res.send("root is working");
+})
+
+const handleValidationError = (err)=>{
+    console.log("ValidationError occur plese follow the rules");
+    console.log(err.message);
+    return err;
+}
+
+app.use((err,req,res,next)=>{
+    console.log(err.name);
+    if(err.name === "ValidationError"){
+        handleValidationError(err);
+    }
+    next(err);
 })
 
 // error-handling middleware
