@@ -9,13 +9,13 @@ async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/relationDemo');
 }
 
-// Define subdocument schema with _id disabled
+
 const addressSchema = new Schema({
     location: String,
     city: String
 }, { _id: false });
 
-// Main user schema
+
 const userSchema = new Schema({
     userName: String,
     addresses: [addressSchema]
