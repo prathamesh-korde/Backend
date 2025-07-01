@@ -1,0 +1,8 @@
+//update 
+db.employee.updateOne(
+   { item: "journal" },
+   {
+     $set: {tags : ["blank","orange"],qty:50},
+     $currentDate: { lastModified: true }
+   }
+)

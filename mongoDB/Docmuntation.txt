@@ -1,0 +1,12 @@
+1.mongo offecial document
+https://www.mongodb.com/docs/manual/
+
+2.mongo curd operatoipon
+https://www.mongodb.com/docs/manual/crud/
+
+3.mongo db operators
+https://www.mongodb.com/docs/manual/reference/operator/query/
+
+
+4.Aggregation Pipeline
+https://www.mongodb.com/docs/manual/core/aggregation-pipeline/

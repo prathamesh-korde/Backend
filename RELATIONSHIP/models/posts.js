@@ -46,12 +46,8 @@ const Post = mongoose.model("Post", postSchema);
 // addData();
 
 const getData = async () => {
-    try {
-        let result = await Post.findOne({}).populate("user");
-        console.log(result);
-    } catch (err) {
-        console.error("Error fetching data:", err);
-    }
+    const result = await Post.findOne({}).populate("user","email");
+    console.log(result);
 };
 
 getData();
