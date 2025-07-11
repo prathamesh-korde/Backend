@@ -36,15 +36,20 @@ app.get("/", (req, res) => {
 });
 
 //validateListing
-const validateListing = (req,res,next)=>{
-  let {error} = ListingSchema.validate(req.body);
- if(error){
-  let errMsg = error.details.map((el)=>el.message).join(",");
-  throw new ExpressError(400,errMsg);
- }else{
-  next();
- }
-}
+const validateListing = (req, res, next) => {
+  console.log("REQ BODY:", req.body); // Debug 1
+
+  const { error } = ListingSchema.validate(req.body.Listing);
+  if (error) {
+    console.log("VALIDATION ERROR DETAILS:", error.details); // Debug 2
+    const errMsg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, errMsg);
+  } else {
+    next();
+  }
+};
+
+
 
 const validateReview = (req,res,next)=>{
   let {error} = reviewSchema.validate(req.body);

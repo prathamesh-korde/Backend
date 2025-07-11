@@ -29,7 +29,11 @@
       <!-- Image -->
       <div class="mb-3">
         <label for="image" class="form-label">Image</label>
-        <input id="image" name="Listing[image]" value="<%= listing.image %>" type="text" class="form-control" required>
+
+       <input type="text" class="form-control" name="Listing[image][url]" value="<%= listing.image.url %>">
+<input type="text" class="form-control mt-2" name="Listing[image][filename]" value="<%= listing.image.filename %>">
+
+       
         <div class="invalid-feedback">Please provide a valid image URL.</div>
       </div>
 
