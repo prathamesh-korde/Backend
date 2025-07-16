@@ -8,7 +8,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const {ListingSchema,reviewSchema} = require("./schema.js");
+
+//const {ListingSchema,reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
 main()
   .then(() => {
@@ -36,30 +37,30 @@ app.get("/", (req, res) => {
 });
 
 //validateListing
-const validateListing = (req, res, next) => {
-  console.log("REQ BODY:", req.body); // Debug 1
+// const validateListing = (req, res, next) => {
+//   console.log("REQ BODY:", req.body); // Debug 1
 
-  const { error } = ListingSchema.validate(req.body.Listing);
-  if (error) {
-    console.log("VALIDATION ERROR DETAILS:", error.details); // Debug 2
-    const errMsg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(400, errMsg);
-  } else {
-    next();
-  }
-};
+//   const { error } = ListingSchema.validate(req.body.Listing);
+//   if (error) {
+//     console.log("VALIDATION ERROR DETAILS:", error.details); // Debug 2
+//     const errMsg = error.details.map((el) => el.message).join(",");
+//     throw new ExpressError(400, errMsg);
+//   } else {
+//     next();
+//   }
+// };
 
 
 
-const validateReview = (req,res,next)=>{
-  let {error} = reviewSchema.validate(req.body);
- if(error){
-  let errMsg = error.details.map((el)=>el.message).join(",");
-  throw new ExpressError(400,errMsg);
- }else{
-  next();
- }
-}
+// const validateReview = (req,res,next)=>{
+//   let {error} = reviewSchema.validate(req.body);
+//  if(error){
+//   let errMsg = error.details.map((el)=>el.message).join(",");
+//   throw new ExpressError(400,errMsg);
+//  }else{
+//   next();
+//  }
+// }
 
 
 //new route
@@ -81,7 +82,7 @@ app.get("/Listings",wrapAsync(async (req,res)=>{
 }));
 
 //create
-app.post("/Listings", validateListing ,wrapAsync(async (req, res, next) => {
+app.post("/Listings",wrapAsync(async (req, res, next) => {
   const newListing = new Listing(req.body.Listing);
   await newListing.save();
   res.redirect("/Listings");
@@ -96,10 +97,12 @@ app.get("/Listings/:id/edit", wrapAsync(async (req,res)=>{
 }));
 
 //Update route
-app.put("/Listings/:id",validateListing,wrapAsync( async (req, res) => {
-  // if (!req.body.Listing) {
-  //   throw new ExpressError(400, "Send valid data for listing");
-  // }
+app.put("/Listings/:id",wrapAsync( async (req, res) => {
+
+  if (!req.body.Listing) {
+  throw new ExpressError(400, "Invalid listing data");
+}
+
   const { id } = req.params;
   await Listing.findByIdAndUpdate(id, { ...req.body.Listing }, { runValidators: true });
   res.redirect(`/Listings/${id}`);
@@ -113,18 +116,23 @@ app.delete("/Listings/:id",wrapAsync(async(req,res)=>{
 }));
 
 //post route - adding reviews
-app.post("/listings/:id/reviews",validateReview,wrapAsync(async(req,res)=>{
+app.post("/listings/:id/reviews", wrapAsync(async (req, res) => {
+
+  if (!req.body.review) {
+    throw new ExpressError(400, "Invalid review data");
+  }
+
   let listing = await Listing.findById(req.params.id);
   let newReview = new Review(req.body.review);
-  
+
   listing.reviews.push(newReview);
 
   await newReview.save();
   await listing.save();
 
   res.redirect(`/listings/${listing._id}`);
-  
-}))
+}));
+
 
 //Delete reviews Route
 app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async(req,res)=>{
