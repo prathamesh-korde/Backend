@@ -1,109 +1,106 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/relationDemo');
 }
 
-main().then(()=>{
-    console.log("connection Sucessfull");
-}).catch(err=>{
+main().then(() => {
+    console.log("Connection successful");
+}).catch(err => {
     console.log(err);
-})
+});
 
+// Order Schema & Model
 const orderSchema = new Schema({
-    item:String,
-    price : Number,
-})
+    item: String,
+    price: Number,
+});
 
+const Order = mongoose.model("Order", orderSchema);
+
+// Customer Schema
 const customerSchema = new Schema({
-    name:String,
-    orders :[{
-        type:Schema.Types.ObjectId,
-        ref:"Order",
-    }]
-})
+    name: String,
+    orders: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Order",
+        }
+    ]
+});
 
-// customerSchema.pre("findOneAndDelete",async()=>{
-//     console.log("pre middleware");
-// })
+// Middleware: Pre-hook for delete
+customerSchema.pre("findByIdAndDelete", async function () {
+    console.log("Pre middleware: Customer will be deleted");
+});
 
-customerSchema.post("findOneAndDelete", async function(customer) {
+// Middleware: Post-hook for deleting related orders
+customerSchema.post("findByIdAndDelete", async (customer) => {
     if (customer && customer.orders.length) {
         const result = await Order.deleteMany({ _id: { $in: customer.orders } });
-        console.log(result);
+        console.log("Post middleware: Related orders deleted:", result);
     }
 });
 
+const Customer = mongoose.model("Customer", customerSchema);
 
-const Order = mongoose.model("Order",orderSchema);
-const  Customer = mongoose.model("Customer",customerSchema);
+// Add orders (optional)
+const addOrders = async () => {
+    let result = await Order.insertMany([
+        { item: "samosa", price: 15 },
+        { item: "vada-pav", price: 30 },
+        { item: "chocklet", price: 50 }
+    ]);
+    console.log("Orders inserted:", result);
+};
 
+// Add new customer with existing orders
 const addCustomer = async () => {
-    let cust1 = new Customer({
-        name: "rohit kumar",
-    });
+    let cust1 = new Customer({ name: "rohit kumar" });
 
     let order1 = await Order.findOne({ item: "samosa" });
-    let order2 = await Order.findOne({ item: "chocklet" }); 
+    let order2 = await Order.findOne({ item: "chocklet" });
 
-
-    //we pass entire object bust inside database(mongoo db) we only seen the object _id
     if (order1) cust1.orders.push(order1);
-    if (order2) cust1.orders.push(order2); 
+    if (order2) cust1.orders.push(order2);
 
     let result = await cust1.save();
-    console.log(result);
+    console.log("New customer added:", result);
 };
 
+// Add a new order to existing customer
+const addOrderToExistingCustomer = async () => {
+    let newOrder = new Order({ item: "ice", price: 100 });
+    await newOrder.save();
 
-//addCustomer();
+    let customer = await Customer.findOne({ name: "nick" });
 
-// creating model
+    if (!customer) {
+        console.log("Customer not found");
+        return;
+    }
 
-// const addOrders = async()=>{
-//    let result = await Order.insertMany([
-//         {item:"samosa",price:15},
-//         {item : "vada=pav" , price:30},
-//         {item:"chocklet",price:50}
-// ]);
-// console.log(result)
-// }
+    customer.orders.push(newOrder);
+    await customer.save();
+
+    console.log("New order added to existing customer");
+};
+
+// Delete a customer (will also delete their orders via middleware)
+const deleteCustomer = async () => {
+    const result = await Customer.findByIdAndDelete("6878998898907d035e319591");
+    console.log("Customer deleted:", result);
+};
+
+// View customer with populated orders
+const findCustomer = async () => {
+    let result = await Customer.find({}).populate("orders");
+    console.log("Customer with orders:", result[0]);
+};
 
 // addOrders();
-
-
-const findCustomer = async()=>{
-    let result = await Customer.find({}).populate("orders");
-    console.log(result[0]);
-}
-
-//function
-const addCust = async () =>{
-
-    let newCust = new Customer({
-        name:"nick"
-    });
-
-    let newOrder = new Order({
-        item:"pie",
-        price:750
-    })
-
-    newCust.orders.push(newOrder);
-
-    await newOrder.save();
-    await newCust.save();
-
-    console.log("new customer is added");
-
-};
-
-//addCust();
-
-const deletCustomer = async ()=>{
-let data = await Customer.findByIdAndDelete('6866c4b7fd117a7ff51fcc22');
-console.log(data);
-}
-
-deletCustomer();
+// addCustomer();
+// addOrderToExistingCustomer();
+// deleteCustomer();
+// findCustomer();
