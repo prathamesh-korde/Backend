@@ -1,6 +1,9 @@
 {
   "dependencies": {
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.7",
-    "express": "^5.1.0"
+    "ejs-mate": "^4.0.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2"
   }
 }

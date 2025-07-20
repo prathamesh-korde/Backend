@@ -6,6 +6,7 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
+var Session = require('express-session');
 
 const {ListingSchema,reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
@@ -33,6 +34,14 @@ app.use(express.json());
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
+
+const options = {
+  secret : "superSecret",
+  resave : false,
+  saveUninitialized:true,
+  }
+
+app.use(Session(options));
 
 app.get("/", (req, res) => {
   res.send("App is working");
