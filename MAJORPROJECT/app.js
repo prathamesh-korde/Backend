@@ -6,7 +6,9 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
+
 var Session = require('express-session');
+const flash = require('connect-flash');
 
 const {ListingSchema,reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
@@ -39,13 +41,28 @@ const options = {
   secret : "superSecret",
   resave : false,
   saveUninitialized:true,
+  cookie:{
+    expires : Date.now()+7*24*60*60*1000,
+    maxAge:7*24*60*60*1000,
+    httpOnly: true
   }
-
-app.use(Session(options));
+}
 
 app.get("/", (req, res) => {
   res.send("App is working");
 });
+
+app.use(Session(options));
+app.use(flash());
+
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
+
+
 
 app.use("/Listings",Listings);
 app.use("/listings/:id/reviews",reviews);
