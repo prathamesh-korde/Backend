@@ -6,15 +6,18 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
-
 var Session = require('express-session');
 const flash = require('connect-flash');
+const passport = require("passport")
+const LocalStrategy = require("passport-local");
+const User = require("./model/user.js")
 
 const {ListingSchema,reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
 
 const Listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
+const user = require("./models/user.js");
 
 main()
   .then(() => {
@@ -55,13 +58,18 @@ app.get("/", (req, res) => {
 app.use(Session(options));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
-
 
 
 app.use("/Listings",Listings);
