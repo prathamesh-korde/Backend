@@ -10,14 +10,15 @@ var Session = require('express-session');
 const flash = require('connect-flash');
 const passport = require("passport")
 const LocalStrategy = require("passport-local");
-const User = require("./model/user.js")
+const User = require("./models/user.js");
 
 const {ListingSchema,reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
-
+ 
 const Listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
-const user = require("./models/user.js");
+const UserRoute = require("./routes/user.js");
+
 
 main()
   .then(() => {
@@ -71,9 +72,24 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/demouser", async (req, res) => {
+  try {
+    let fakeUser = new User({
+      email: "pratham0123@gmail.com", // fixed email format
+      username: "pratham",
+    });
+
+    let registeredUser = await User.register(fakeUser, "helloworld"); // No space in password ideally
+    res.send(registeredUser);
+  } catch (e) {
+    res.status(500).send(e.message); // handle duplicate user or error
+  }
+});
 
 app.use("/Listings",Listings);
 app.use("/listings/:id/reviews",reviews);
+app.use("/signup",UserRoute);
+
 
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page not found"));
