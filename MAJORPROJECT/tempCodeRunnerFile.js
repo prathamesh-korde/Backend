@@ -1,1 +1,1 @@
-app.use("/signup",UserRoute);
+const User = require("./models/user.js");

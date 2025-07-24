@@ -1,18 +1,13 @@
 <% layout("/layouts/boilerpalte.ejs") %>
 <div class="row">
-  <h1 class="col-6 offset-3">Signup on NxtStay</h1>
+  <h1 class="col-6 offset-3">Login on NxtStay</h1>
   <div class="col-6 offset-3">
-    <form method="POST" action="/signup" novalidate class="needs-validation">
+    <form method="POST" action="/login" novalidate class="needs-validation">
 
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
         <input name="username" id="username" type="text" class="form-control" required>
         <div class="valid-feedback">Looks good!</div>
-      </div>
-
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input name="email" id="email" type="email" class="form-control" required>
       </div>
 
       <div class="mb-3">

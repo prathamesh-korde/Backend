@@ -72,23 +72,22 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/demouser", async (req, res) => {
-  try {
-    let fakeUser = new User({
-      email: "pratham0123@gmail.com", // fixed email format
-      username: "pratham",
-    });
+// app.get("/demouser", async (req, res) => {
+//   try {
+//     let fakeUser = new User({
+//       email: "pratham0123@gmail.com", 
+//       username: "pratham",
+//     });
 
-    let registeredUser = await User.register(fakeUser, "helloworld"); // No space in password ideally
-    res.send(registeredUser);
-  } catch (e) {
-    res.status(500).send(e.message); // handle duplicate user or error
-  }
-});
+//     let registeredUser = await User.register(fakeUser, "helloworld"); 
+//   } catch (e) {
+//     res.status(500).send(e.message); 
+//   }
+// });
 
 app.use("/Listings",Listings);
 app.use("/listings/:id/reviews",reviews);
-app.use("/signup",UserRoute);
+app.use("/",UserRoute);
 
 
 app.use((req, res, next) => {
@@ -97,7 +96,6 @@ app.use((req, res, next) => {
 
 app.use((err,req,res,next) =>{
   let{status=500, message = "Something went wrong"} = err;
-  //res.status(status).send(message);
   res.status(status).render("listings/error.ejs",{message});
 })
 
