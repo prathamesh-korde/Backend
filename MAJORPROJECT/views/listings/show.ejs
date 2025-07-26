@@ -6,17 +6,15 @@
     <div class="col-6 offset-3 show-card isting-card">
   <img src="<%= listing.image.url %>" class="card-img-top show-image" alt="Listing_image">
   <div class="card-body">
-    <p class="card-text">
-     
-      <%= listing.description %><br>
-      &#8377; <%= listing.price.toLocaleString("en-IN") %><br>
-      <%= listing.location %><br>
-      <%= listing.country %><br>
-
-      </p>
+    
+   <p class="card-text"> Owned by- <%= listing.owner.username %>  </p>
+    <p class="card-text"> <%= listing.description %></p>
+    <p class="card-text"> &#8377; <%= listing.price.toLocaleString("en-IN") %></p>
+    <p class="card-text">  <%= listing.location %> </p>
+    <p class="card-text"> <%= listing.country %> </p>
   </div>
 </div>
-   
+
     <div class="btns mb-3">
     <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
    
@@ -24,6 +22,8 @@
       <button class="btn btn-dark offset-5">Delete</button>
     </form>
 </div>
+
+
 <hr>
 <div class="col-8 offset-3 mb-3">
   <h4>Leave a Review</h4>
@@ -59,5 +59,4 @@
   </div>
   <% } %>
   </div>
- 
  </div>
