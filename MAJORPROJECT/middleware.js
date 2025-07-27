@@ -13,6 +13,7 @@ module.exports.islogin = (req,res,next)=>{
   next();
 }
 
+
 module.exports.saveRedtecturl = (req,res,next)=>{
   if(req.session.redirectUrl){
     res.locals.redirectUrl = req.session.redirectUrl;
@@ -29,6 +30,7 @@ module.exports.isOwner = async(req,res,next)=>{
   }
   next();
 }
+
 
 //validateListing
 module.exports.validateListing = (req, res, next) => {

@@ -19,7 +19,6 @@ const Listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
 const UserRoute = require("./routes/user.js");
 
-
 main()
   .then(() => {
     console.log("Connected to DB");
