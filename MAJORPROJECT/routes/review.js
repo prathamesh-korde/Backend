@@ -1,24 +1,14 @@
 const express = require("express");
 const router = express.Router({mergeParams:true});
 const wrapAsync = require("../utils/wrapAsync.js");
-const {reviewSchema} = require("../schema.js");
 const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing.js");
 const Review = require("../models/review.js");
+const {validateReview,islogin,isReviewAuthor} = require("../middleware.js");
 
-//validateReview 
-const validateReview = (req, res, next) => {
-  let { error } = reviewSchema.validate(req.body);
-  if (error) {
-    const errMsg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(400, errMsg);
-  } else {
-    next();
-  }
-};
 
 //post route - adding reviews
-router.post("/",validateReview, wrapAsync(async (req, res) => {
+router.post("/",islogin,validateReview, wrapAsync(async (req, res) => {
 
   if (!req.body.review) {
     throw new ExpressError(400, "Invalid review data");
@@ -26,6 +16,10 @@ router.post("/",validateReview, wrapAsync(async (req, res) => {
 
   let listing = await Listing.findById(req.params.id);
   let newReview = new Review(req.body.review);
+
+
+  newReview.author = req.user._id;
+  
 
   listing.reviews.push(newReview);
 
@@ -39,7 +33,7 @@ router.post("/",validateReview, wrapAsync(async (req, res) => {
 
 
 //Delete reviews Route
-router.delete("/:reviewId", wrapAsync(async(req,res)=>{
+router.delete("/:reviewId",islogin,isReviewAuthor, wrapAsync(async(req,res)=>{
   let {id,reviewId} = req.params;
 
   await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
