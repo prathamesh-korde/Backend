@@ -6,9 +6,10 @@ const passport = require("passport");
 const {islogin,isOwner,validateListing} = require("../middleware.js");
 const listingControler = require("../controllers/listing.js");
 const { route } = require("./user.js");
-const multer  = require('multer')
-const upload = multer({ dest: 'MAJORPROJECT/uploads/' })
+const multer  = require('multer');
 
+const {storage} = require("./cloudConFig.js");
+const upload = multer({ storage });
 
 //new route
 
@@ -17,10 +18,8 @@ router
 //index route
 .get(wrapAsync(listingControler.index))
 //create
-//.post(islogin,validateListing,wrapAsync(listingControler.createListing))
-.post(upload.single('Listing[image]'),(req,res)=>{
-    res.send(req.file);
-})
+.post(islogin,upload.single('Listing[image]'),wrapAsync(listingControler.createListing));
+
 
 router.get("/new",islogin,(req,res)=>{
     res.render("Listings/new.ejs");
