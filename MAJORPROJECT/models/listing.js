@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
-const { ref } = require("joi");
+const { ref, string } = require("joi");
 
 
 const ListingSchema = new Schema({
@@ -10,11 +10,9 @@ const ListingSchema = new Schema({
     
   },
   description : String,
-  image: { filename: String, 
-    url: {
-      type: String,
-      default: "https://cdn.create.vista.com/api/media/medium/8691703/stock-photo-suburban-home-with-front-porch?token=" // <-- Default image URL
-    },
+  image: { 
+    url:String,
+    filename: String
    }
 ,
   price : Number,

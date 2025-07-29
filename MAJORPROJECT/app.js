@@ -37,9 +37,13 @@ async function main() {
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({ extended: true }));
+//middleware that parses URL-encoded data (from HTML forms) and makes it available in req.body.
 app.use(methodOverride("_method"));
+//Express app support HTTP methods like PUT, PATCH, and DELETE in places (like HTML forms) where only GET and POST are allowed.
 app.use(express.json()); 
+//Express app to automatically parse incoming JSON data in the request body and make it available as req.body.
 app.engine("ejs",ejsMate);
+//
 app.use(express.static(path.join(__dirname,"/public")));
 
 
