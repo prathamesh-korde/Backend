@@ -29,7 +29,7 @@ router
 //Show route
 .get(wrapAsync(listingControler.showListing))
 //Update route
-.put(islogin,isOwner,wrapAsync(listingControler.updateListing))
+.put(islogin,isOwner,upload.single('image'),wrapAsync(listingControler.updateListing))
 //delete route
 .delete(islogin,isOwner,wrapAsync(listingControler.destroyListing));
 

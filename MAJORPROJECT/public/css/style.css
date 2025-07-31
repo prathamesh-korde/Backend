@@ -27,6 +27,7 @@ body{
 .ft-info a{
     text-decoration: none;
     color: #222222;
+     position: static; 
 }
 
 .f-info-links a:hover{
@@ -108,4 +109,10 @@ body{
 .show-card{
    padding-left: 0;
    padding-right: 0;
+}
+
+/*map-styling*/
+#map { position: absolute;
+    height:400px;
+    width: 80vh;
 }

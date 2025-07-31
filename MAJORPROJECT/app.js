@@ -43,7 +43,6 @@ app.use(methodOverride("_method"));
 app.use(express.json()); 
 //Express app to automatically parse incoming JSON data in the request body and make it available as req.body.
 app.engine("ejs",ejsMate);
-//
 app.use(express.static(path.join(__dirname,"/public")));
 
 
@@ -57,7 +56,6 @@ const options = {
     httpOnly: true,
   }
 };
-
 
 app.get("/", (req, res) => {
   res.send("App is working");

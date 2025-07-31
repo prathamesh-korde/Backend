@@ -1,5 +1,9 @@
 <% layout("/layouts/boilerpalte.ejs") %>
 
+<script>
+   let mapToken = `<%= process.env.MAP_TOKEN %>`
+</script>
+
 <div class="row mt-3">
   <div class="col-8 offset-3">
     <h3><%= listing.title %></h3>
@@ -28,7 +32,6 @@
 
 <hr>
 
-
 <div class="col-8 offset-3 mb-3">
   <% if (Curruser) { %>
     <h4>Leave a Review</h4>
@@ -36,7 +39,7 @@
       <div class="btns mb-3">
         <label for="rating" class="form-label">Rating</label>
         <fieldset class="starability-slot">
-           <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" aria-label="No rating"/>
+          <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" aria-label="No rating" />
           <input type="radio" id="first-rate1" name="review[rating]" value="1" />
           <label for="first-rate1" title="Terrible">1 star</label>
           <input type="radio" id="first-rate2" name="review[rating]" value="2" />
@@ -61,21 +64,30 @@
   <% } %>
 </div>
 
-<h4 class="offset-3 mt-4">All Reviews</h4>
-<div class="row">
-  <% for (let review of listing.reviews) { %>
-    <div class="card col-5 ms-3 mb-3">
-      <div class="card-body">
-        <h5 class="card-title">@<%= review.author.username %></h5>
-        <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
-        <p class="card-text"><%= review.comment %></p>
+<% if (listing.reviews.length > 0) { %>
+  <div class="row">
+    <h4>All Reviews</h4>
+    <% for (let review of listing.reviews) { %>
+      <div class="card col-md-5 m-2 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">@<%= review.author.username %></h5>
+          <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+          <p class="card-text"><%= review.comment %></p>
 
-        <% if (Curruser && Curruser._id.toString() === review.author._id.toString()) { %>
-          <form class="mb-3" method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-            <button class="btn btn-dark">Delete</button>
-          </form>
-        <% } %>
+          <% if (Curruser && Curruser._id.toString() === review.author._id.toString()) { %>
+            <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+              <button class="btn btn-sm btn-outline-danger">Delete</button>
+            </form>
+          <% } %>
+        </div>
       </div>
-    </div>
-  <% } %>
+    <% } %>
+  </div>
+<% } %>
+
+<div class="mt-5">
+  <h3>Where You'll Be</h3>
+  <div id="map"></div>
 </div>
+
+<script src="/js/map.js"></script>
