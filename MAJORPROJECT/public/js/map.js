@@ -1,7 +1,13 @@
+mapboxgl.accessToken = mapToken;
 
-	mapboxgl.accessToken = mapToken
-    const map = new mapboxgl.Map({
-        container: 'map', // container ID
-        center: [79.0882, 21.1458], // starting position [lng, lat]. Note that lat must be set between -90 and 90
-        zoom: 9 // starting zoom
-    });
+const map = new mapboxgl.Map({
+    container: 'map',
+    center: coordinates,
+    zoom: 9
+});
+
+const marker = new mapboxgl.Marker({color:"red"})
+    .setLngLat(coordinates)
+    .setPopup(new mapboxgl.Popup({offset: 25})
+    .setHTML("<p>Exact Location will be provided after booking</p>"))
+    .addTo(map);

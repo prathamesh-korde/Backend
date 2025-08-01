@@ -27,7 +27,6 @@ body{
 .ft-info a{
     text-decoration: none;
     color: #222222;
-     position: static; 
 }
 
 .f-info-links a:hover{
@@ -112,7 +111,9 @@ body{
 }
 
 /*map-styling*/
-#map { position: absolute;
+#map { 
+    
     height:400px;
     width: 80vh;
+    margin-bottom: 20px;
 }

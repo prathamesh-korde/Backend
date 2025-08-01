@@ -1,7 +1,9 @@
 <% layout("/layouts/boilerpalte.ejs") %>
 
+
 <script>
-   let mapToken = `<%= process.env.MAP_TOKEN %>`
+   let mapToken = `<%= process.env.MAP_TOKEN %>`;
+   let coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
 </script>
 
 <div class="row mt-3">
@@ -20,6 +22,7 @@
     </div>
   </div>
 </div>
+
 
 <% if (Curruser && Curruser._id.toString() === listing.owner._id.toString()) { %>
   <div class="btns mb-3">
