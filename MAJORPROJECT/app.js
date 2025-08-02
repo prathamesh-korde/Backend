@@ -57,10 +57,7 @@ const options = {
   }
 };
 
-app.get("/", (req, res) => {
-  res.send("App is working");
-});
-
+ 
 app.use(Session(options));
 app.use(flash());
 
