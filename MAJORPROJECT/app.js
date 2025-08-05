@@ -4,12 +4,15 @@ if (process.env.NODE_ENV != "production") {
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const mongo_URL = "mongodb://127.0.0.1:27017/NxtStay";
+const dbUrl = process.env.ATLASDB_URL;
+// const mongo_URL = "mongodb://127.0.0.1:27017/NxtStay";
+
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 var Session = require('express-session');
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const passport = require("passport")
 const LocalStrategy = require("passport-local");
@@ -31,7 +34,7 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(mongo_URL);
+  await mongoose.connect(dbUrl);
 }
 
 app.set("view engine","ejs");
@@ -46,7 +49,19 @@ app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname,"/public")));
 
 
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 60 * 60, // time in seconds
+  crypto: {
+    secret: 'superSecret',
+  } 
+});
+
+store.on("error", ()=>{
+  console.log("Session store error"+ err);
+});
 const options = {
+  store,
   secret: "superSecret",
   resave: false,
   saveUninitialized: false, 

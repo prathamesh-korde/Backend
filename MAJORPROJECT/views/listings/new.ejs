@@ -1,4 +1,5 @@
 <% layout("/layouts/boilerpalte.ejs") %>
+
 <div class="row">
     <div class="col-8 offset-2">
         <br><br>
@@ -44,12 +45,29 @@
        <div class="invalid-feedback">location shoud be valid</div>
     </div>
         </div>
+<div class="row">
 
-        <div class="mb-3">
+        <div class="mb-3 col-md-8">
             <label for="country" class="form-label"> Country</label>
         <input name="Listing[country]" placeholder="India" type="text" class="form-control" required> 
         <div class="invalid-feedback">please enter valid country name</div>
     </div>
+
+     <div class="mb-3 col-md-4">
+        <label for="category" class="form-label">Choose a category:</label><br>
+  <select name="Listing[category]" id="category" class="form-control">
+  <option value="Trending">Trending</option>
+  <option value="Castles">Castles</option>
+  <option value="Amazing Pools">Amazing Pools</option>
+  <option value="Camping">Camping</option>
+  <option value="Farms">Farms</option>
+  <option value="Artic">Artic</option>  
+    <option value="Boats">Boats</option>
+</select>
+    </div>
+
+    </div>
+
         <div >
         <button class="btn  add-btn"> Add </button>
         </div>

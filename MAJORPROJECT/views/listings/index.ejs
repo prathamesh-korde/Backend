@@ -1,4 +1,5 @@
 <% layout("/layouts/boilerpalte.ejs") %>
+
     <style>
       #filters{
         margin-top: 1rem;
@@ -28,8 +29,11 @@
     .txt-toggle{
       border: 1px solid black;
       border-radius: 1rem;
-      height: 3.5rem;
+      height: 2.5rem;
       padding: 1rem;
+      margin-left: 2rem;
+      display: flex;
+      align-items: center;
     }
 
     </style>
@@ -81,6 +85,16 @@
         <p>Artic</p>
       </div>
 
+      <div class="filter">
+           <div><i class="fa-solid fa-igloo"></i></div>
+        <p>Domes</p>
+        </div>
+
+        <div class="filter">
+        <div><i class="fa-solid fa-ship"></i></div>
+        <p>Boats</p>
+      </div>
+
       <div class="txt-toggle">
       <div class="form-check-reverse form-switch">
   <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
@@ -93,14 +107,12 @@
  
     <div class="row row-cols-lg-3 row-cols-mid-3 row-cols-sm-1 row-cols-xs-1 mt-3">
     <% for(let listing of allListings) { %>
-
      <a href="/Listings/<%=listing._id %>" class="listing-links">
     <div class="card  col isting-card" >
   <img src="<%= listing.image.url %>" class="card-img-top" alt="Listing image" style="height: 20rem;">
   <div class="card-img-overlay">
   </div>
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
     <p class="card-text">
         <b><%= listing.title %></b>
         <br><br>
@@ -114,6 +126,17 @@
  </div>
 
  <script>
+
+
+
+  const filters = document.getElementsByClassName("filter");
+
+for (let filter of filters) {
+  filter.addEventListener("click", () => {
+    const category = filter.querySelector("p").innerText.trim();
+    window.location.href = `/Listings?category=${(category)}`;
+  });
+}
   const form_switch = document.getElementById("flexSwitchCheckDefault");
   form_switch.addEventListener(("click"),()=>{
     let taxinfo = document.getElementsByClassName("tax-info");
