@@ -53,7 +53,7 @@ const store = MongoStore.create({
   mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60, // time in seconds
   crypto: {
-    secret: 'superSecret',
+    secret:process.env.SECRET,
   } 
 });
 
@@ -62,7 +62,7 @@ store.on("error", ()=>{
 });
 const options = {
   store,
-  secret: "superSecret",
+  secret: process.env.SECRET ,
   resave: false,
   saveUninitialized: false, 
   cookie: {
