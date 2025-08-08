@@ -3,7 +3,7 @@
 NxtStay is a full-stack web application for booking and listing vacation rentals, inspired by platforms like Airbnb. Users can browse, list, and review unique stays from around the world.
 
 ## Live Demo
-[Deployed Project on Render](https://nxtstay.onrender.com/listings)
+[Deployed Project on Render](https://nxtstay.onrender.com/Listings)
 
 ## Features
 - User authentication (signup/login)
@@ -51,7 +51,7 @@ MAJORPROJECT/
    node app.js
    ```
 5. **Visit:**
-   - [http://localhost:3000/listings](http://localhost:3000/listings)
+   - [http://localhost:3000/listings](https://nxtstay.onrender.com/Listings)
 
 ## Contributing
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
